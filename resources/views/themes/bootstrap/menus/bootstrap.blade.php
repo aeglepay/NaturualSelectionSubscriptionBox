@@ -1,5 +1,5 @@
 @if(!isset($innerLoop))
-<ul class="navbar-nav mr-auto">
+<ul class="navbar-nav mr-5">
 @else
 <ul class="dropdown-menu">
 @endif

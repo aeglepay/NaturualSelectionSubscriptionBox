@@ -1192,27 +1192,27 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table voyager_theme_options
+# Dump of table theme_options
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `voyager_theme_options`;
+DROP TABLE IF EXISTS `theme_options`;
 
-CREATE TABLE `voyager_theme_options` (
+CREATE TABLE `theme_options` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `voyager_theme_id` int(10) unsigned NOT NULL,
+  `theme_id` int(10) unsigned NOT NULL,
   `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `voyager_theme_options_voyager_theme_id_index` (`voyager_theme_id`),
-  CONSTRAINT `voyager_theme_options_voyager_theme_id_foreign` FOREIGN KEY (`voyager_theme_id`) REFERENCES `voyager_themes` (`id`) ON DELETE CASCADE
+  KEY `theme_options_theme_id_index` (`theme_id`),
+  CONSTRAINT `theme_options_theme_id_foreign` FOREIGN KEY (`theme_id`) REFERENCES `themes` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `voyager_theme_options` WRITE;
-/*!40000 ALTER TABLE `voyager_theme_options` DISABLE KEYS */;
+LOCK TABLES `theme_options` WRITE;
+/*!40000 ALTER TABLE `theme_options` DISABLE KEYS */;
 
-INSERT INTO `voyager_theme_options` (`id`, `voyager_theme_id`, `key`, `value`, `created_at`, `updated_at`)
+INSERT INTO `theme_options` (`id`, `theme_id`, `key`, `value`, `created_at`, `updated_at`)
 VALUES
 	(2,2,'logo','themes/February2018/UUgOwPG08CnLLBOtgNWR.png','2017-11-22 16:54:46','2018-02-11 05:02:40'),
 	(4,2,'home_headline','Create your next great idea','2017-11-25 17:31:45','2018-08-28 00:17:41'),
@@ -1223,16 +1223,16 @@ VALUES
 	(9,2,'home_promo_image','themes/February2018/mFajn4fwpGFXzI1UsNH6.png','2017-11-25 21:36:46','2017-11-29 01:17:00'),
 	(10,2,'footer_logo','themes/August2018/TksmVWMqp5JXUQj8C6Ct.png','2018-08-28 23:12:11','2018-08-28 23:12:11');
 
-/*!40000 ALTER TABLE `voyager_theme_options` ENABLE KEYS */;
+/*!40000 ALTER TABLE `theme_options` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table voyager_themes
+# Dump of table themes
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `voyager_themes`;
+DROP TABLE IF EXISTS `themes`;
 
-CREATE TABLE `voyager_themes` (
+CREATE TABLE `themes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `folder` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1241,17 +1241,17 @@ CREATE TABLE `voyager_themes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `voyager_themes_folder_unique` (`folder`)
+  UNIQUE KEY `themes_folder_unique` (`folder`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `voyager_themes` WRITE;
-/*!40000 ALTER TABLE `voyager_themes` DISABLE KEYS */;
+LOCK TABLES `themes` WRITE;
+/*!40000 ALTER TABLE `themes` DISABLE KEYS */;
 
-INSERT INTO `voyager_themes` (`id`, `name`, `folder`, `active`, `version`, `created_at`, `updated_at`)
+INSERT INTO `themes` (`id`, `name`, `folder`, `active`, `version`, `created_at`, `updated_at`)
 VALUES
 	(2,'UI Kit Theme','uikit',1,'1.0','2017-11-21 17:09:21','2017-11-21 17:11:57');
 
-/*!40000 ALTER TABLE `voyager_themes` ENABLE KEYS */;
+/*!40000 ALTER TABLE `themes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

@@ -12,7 +12,7 @@ class CreateVoyagerThemesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('voyager_themes', function(Blueprint $table)
+		Schema::create('themes', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('name');
@@ -31,7 +31,7 @@ class CreateVoyagerThemesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('voyager_themes');
+		Schema::drop('themes');
 	}
 
 }

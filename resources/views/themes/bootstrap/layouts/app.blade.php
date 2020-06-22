@@ -3,9 +3,9 @@
 <head>
 
     @if(isset($seo->title))
-        <title>{{ $seo->title }}</title>
+    <title>{{ $seo->title }}</title>
     @else
-        <title>{{ setting('site.title', 'Laravel Wave') . ' - ' . setting('site.description', 'The Software as a Service Starter Kit built on Laravel & Voyager') }}</title>
+    <title>{{ setting('site.title', 'Laravel Wave') . ' - ' . setting('site.description', 'The Software as a Service Starter Kit built on Laravel & Voyager') }}</title>
     @endif
 
     <meta charset="utf-8">
@@ -18,32 +18,34 @@
 
     {{-- Social Share Open Graph Meta Tags --}}
     @if(isset($seo->title) && isset($seo->description) && isset($seo->image))
-        <meta property="og:title" content="{{ $seo->title }}">
-        <meta property="og:url" content="{{ Request::url() }}">
-        <meta property="og:image" content="{{ $seo->image }}">
-        <meta property="og:type" content="@if(isset($seo->type)){{ $seo->type }}@else{{ 'article' }}@endif">
-        <meta property="og:description" content="{{ $seo->description }}">
-        <meta property="og:site_name" content="{{ setting('site.title') }}">
+    <meta property="og:title" content="{{ $seo->title }}">
+    <meta property="og:url" content="{{ Request::url() }}">
+    <meta property="og:image" content="{{ $seo->image }}">
+    <meta property="og:type" content="@if(isset($seo->type)){{ $seo->type }}@else{{ 'article' }}@endif">
+    <meta property="og:description" content="{{ $seo->description }}">
+    <meta property="og:site_name" content="{{ setting('site.title') }}">
 
-        <meta itemprop="name" content="{{ $seo->title }}">
-        <meta itemprop="description" content="{{ $seo->description }}">
-        <meta itemprop="image" content="{{ $seo->image }}">
+    <meta itemprop="name" content="{{ $seo->title }}">
+    <meta itemprop="description" content="{{ $seo->description }}">
+    <meta itemprop="image" content="{{ $seo->image }}">
 
-        @if(isset($seo->image_w) && isset($seo->image_h))
-            <meta property="og:image:width" content="{{ $seo->image_w }}">
-            <meta property="og:image:height" content="{{ $seo->image_h }}">
-        @endif
+    @if(isset($seo->image_w) && isset($seo->image_h))
+    <meta property="og:image:width" content="{{ $seo->image_w }}">
+    <meta property="og:image:height" content="{{ $seo->image_h }}">
+    @endif
     @endif
 
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
 
     @if(isset($seo->description))
-        <meta name="description" content="{{ $seo->description }}">
+    <meta name="description" content="{{ $seo->description }}">
     @endif
 
     <!-- Styles -->
+    <link href="//cdn.materialdesignicons.com/4.2.95/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="{{ asset('themes/bootstrap/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('themes/bootstrap/css/custom.css') }}" rel="stylesheet">
 </head>
 <body class="@if(Request::is('/')){{ 'home' }}@else{{ str_slug(str_replace('/', '-', Request::path())) }}@endif">
 
@@ -51,76 +53,83 @@
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light @if(Request::is('/')){{ 'fixed-top' }}@endif" id="navbar">
             <div class="container">
-                <a class="navbar-brand" href="/"><img src="{{ Voyager::image(theme('logo')) }}" style="height:35px;"></a>
+                <a class="navbar-brand" href="/"><img src="{{ Voyager::image(theme('logo')) }}" style="height:75px;"></a>
 
 
                 @if(!Auth::guest())
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            {!! menu('authenticated-menu', 'theme::menus.bootstrap') !!}
-                        </ul>
-                    </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        {!! menu('authenticated-menu', 'theme::menus.bootstrap') !!}
+                    </ul>
+                </div>
                 @endif
 
                 <button class="navbar-toggler @if(Auth::guest()){{ 'nonauth' }}@endif" type="button" data-toggle="collapse" data-target="#guestMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse navbar-right" id="guestMenu">
                     <ul class="navbar-nav ml-auto">
                         @if(Auth::guest())
-                            {!! menu('guest-menu', 'theme::menus.bootstrap') !!}
-                            <li class="nav-login"><a href="/login">Login</a></li>
-                            <li>
-                                <a href="/register"><button class="btn btn-primary">Sign Up</button></a>
-                            </li>
+                        {!! menu('guest-menu', 'theme::menus.bootstrap') !!}
+                        <li>
+                            <a href="/admin/login"><button class="btn btn-light mt-2 px-3 py-2 border border-dark text-uppercase">Login</button></a>
+                        </li>
+                        <li>
+                            <a href="/login" class="btn rounded-circle mt-1"><i class="mdi mdi-cart mdi-24px mt-2 text-dark"></i></a>
+                        </li>
+                        <li>
+                            <a href="/login" class="btn rounded-circle mt-1"><i class="mdi mdi-magnify mdi-24px text-dark"></i></a>
+                        </li>
                         @else
 
 
-                            @if( auth()->user()->onTrial() )
-                                <li><span class="trial-days">You have {{ auth()->user()->daysLeftOnTrial() }} @if(auth()->user()->daysLeftOnTrial() > 1){{ 'Days' }}@else{{ 'Day' }}@endif left on your @if(auth()->user()->subscription('main') && auth()->user()->subscription('main')->onTrial()){{ ucfirst(auth()->user()->role->name) . ' Plan' }}@else{{ 'Free' }}@endif Trial</span></li>
-                            @endif
+                        @if( auth()->user()->onTrial() )
+                        <li><span class="trial-days">You have {{ auth()->user()->daysLeftOnTrial() }} @if(auth()->user()->daysLeftOnTrial() > 1){{ 'Days' }}@else{{ 'Day' }}@endif left on your @if(auth()->user()->subscription('main') && auth()->user()->subscription('main')->onTrial()){{ ucfirst(auth()->user()->role->name) . ' Plan' }}@else{{ 'Free' }}@endif Trial</span></li>
+                        @endif
 
-                            @if( auth()->user()->subscribed('main') && auth()->user()->subscription('main')->onGracePeriod() && !auth()->user()->onTrial() )
-                                <li><span class="trial-days">You have {{ auth()->user()->daysLeftOnGrace() }} @if(auth()->user()->daysLeftOnTrial() > 1){{ 'Days' }}@else{{ 'Day' }}@endif left on your {{ ucfirst(auth()->user()->role->name) . ' Plan' }}</span></li>
-                            @endif
+                        @if( auth()->user()->subscribed('main') && auth()->user()->subscription('main')->onGracePeriod() && !auth()->user()->onTrial() )
+                        <li><span class="trial-days">You have {{ auth()->user()->daysLeftOnGrace() }} @if(auth()->user()->daysLeftOnTrial() > 1){{ 'Days' }}@else{{ 'Day' }}@endif left on your {{ ucfirst(auth()->user()->role->name) . ' Plan' }}</span></li>
+                        @endif
 
-                            @if(!Request::is('notifications'))
-                                @include('theme::partials.notifications')
-                            @endif
+                        @if(!Request::is('notifications'))
+                        @include('theme::partials.notifications')
+                        @endif
 
-                            <li class="dropdown user-dropdown-li">
+                        <li class="dropdown user-dropdown-li">
 
-                                <a class="nav-link dropdown-toggle user-icon" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle user-icon" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ Voyager::image(Auth::user()->avatar) }}">
+                            </a>
+                            <div class="dropdown-menu user-dropdown" aria-labelledby="navbarDropdown">
+
+                                <div class="user-dropdown-info">
                                     <img src="{{ Voyager::image(Auth::user()->avatar) }}">
-                                </a>
-                                <div class="dropdown-menu user-dropdown" aria-labelledby="navbarDropdown">
-
-                                    <div class="user-dropdown-info">
-                                        <img src="{{ Voyager::image(Auth::user()->avatar) }}">
-                                        <div>
-                                            <p>{{ Auth::user()->name }}</p>
-                                            <span>{{ Auth::user()->username }}</span>
-                                        </div>
+                                    <div>
+                                        <p>{{ Auth::user()->name }}</p>
+                                        <span>{{ Auth::user()->username }}</span>
                                     </div>
-                                    <div class="user-dropdown-plan"><div class="badge badge-success badge-plan"  style="background:#{{ stringToColorCode(auth()->user()->role->display_name) }}">{{ auth()->user()->role->display_name }}</div></div>
-                                    @if( auth()->user()->onTrial() && !auth()->user()->subscription('main') )
-                                        <a href="{{ route('wave.settings', 'plans') }}" class="dropdown-item"><span uk-icon="icon: cloud-upload"></span>Upgrade My Account</a>
-                                    @endif
-                                    @if( !auth()->guest() && auth()->user()->can('browse_admin') )
-                                        <a href="{{ route('voyager.dashboard') }}" class="dropdown-item"><i class="fa fa-bolt"></i> Admin</a>
-                                    @endif
-                                    <a href="{{ route('wave.profile', Auth::user()->username) }}" class="dropdown-item"><i class="fa fa-user-o"></i> My Profile</a>
-                                    <a href="{{ route('wave.settings') }}" class="dropdown-item"><i class="fa fa-cog"></i> Settings</a>
-                                    <a href="{{ route('wave.notifications') }}" class="d-lg-none d-xl-none"><i class="fa fa-bell"></i> My Notifications</a>
-                                    <a href="{{ route('logout') }}" class="dropdown-item"><i class="fa fa-sign-out"></i> Logout</a>
-
                                 </div>
+                                <div class="user-dropdown-plan">
+                                    <div class="badge badge-success badge-plan" style="background:#{{ stringToColorCode(auth()->user()->role->display_name) }}">{{ auth()->user()->role->display_name }}</div>
+                                </div>
+                                @if( auth()->user()->onTrial() && !auth()->user()->subscription('main') )
+                                <a href="{{ route('wave.settings', 'plans') }}" class="dropdown-item"><span uk-icon="icon: cloud-upload"></span>Upgrade My Account</a>
+                                @endif
+                                @if( !auth()->guest() && auth()->user()->can('browse_admin') )
+                                <a href="{{ route('voyager.dashboard') }}" class="dropdown-item"><i class="fa fa-bolt"></i> Admin</a>
+                                @endif
+                                <a href="{{ route('wave.profile', Auth::user()->username) }}" class="dropdown-item"><i class="fa fa-user-o"></i> My Profile</a>
+                                <a href="{{ route('wave.settings') }}" class="dropdown-item"><i class="fa fa-cog"></i> Settings</a>
+                                <a href="{{ route('wave.notifications') }}" class="d-lg-none d-xl-none"><i class="fa fa-bell"></i> My Notifications</a>
+                                <a href="{{ route('logout') }}" class="dropdown-item"><i class="fa fa-sign-out"></i> Logout</a>
 
-                            </li>
+                            </div>
+
+                        </li>
 
                         @endif
                     </ul>
@@ -136,11 +145,11 @@
         @yield('content')
     </div>
 
-    <div id="footer" data-sticky-footer>
+    <div id="footer" data-sticky-footer class="bg-secondary text-white">
 
-        <div class="pb-5">
+        <div class="pb-5 text-white">
 
-            <div class="container py-5 border-top">
+            <div class="container py-5 border-top text-white">
 
                 <div class="row">
 
@@ -148,7 +157,9 @@
 
                         <div class="ml-2">
 
-                            <a href="/"><img src="{{ Voyager::image(theme('footer_logo')) }}" data-src="{{ Voyager::image(theme('footer_logo')) }}" style="height:16px;"></a>
+                            <a href="/">
+                                <img src="{{ Voyager::image(theme('footer_logo')) }}" data-src="{{ Voyager::image(theme('footer_logo')) }}" style="height:50px;">
+                            </a>
 
                         </div>
 
@@ -161,9 +172,9 @@
                         <h5>Site Links</h5>
 
                         <ul class="list-unstyled text-small">
-                            <li><a href="/#features" class="text-muted" @if(Request::is('/'))@php echo 'uk-scroll="offset:80"'; @endphp@endif>Features</a></li>
-                            <li><a href="/#testimonials" class="text-muted" @if(Request::is('/'))@php echo 'uk-scroll="offset:80"'; @endphp@endif>Testimonials</a></li>
-                            <li><a href="/#pricing" class="text-muted" @if(Request::is('/'))@php echo 'uk-scroll="offset:80"'; @endphp@endif>Pricing</a></li>
+                            <li><a href="/#features" class="text-white" @if(Request::is('/'))@php echo 'uk-scroll="offset:80"' ; @endphp@endif>Features</a></li>
+                            <li><a href="/#testimonials" class="text-white" @if(Request::is('/'))@php echo 'uk-scroll="offset:80"' ; @endphp@endif>Testimonials</a></li>
+                            <li><a href="/#pricing" class="text-white" @if(Request::is('/'))@php echo 'uk-scroll="offset:80"' ; @endphp@endif>Pricing</a></li>
                         </ul>
 
                     </div>
@@ -173,9 +184,9 @@
                         <h5>Wave Resources</h5>
 
                         <ul class="list-unstyled text-small">
-                            <li><a href="https://devdojo.com/scripts/php/wave" class="text-muted" target="_blank">Product Page</a></li>
-                            <li><a href="/docs" class="text-muted">Documentation</a></li>
-                            <li><a href="https://devdojo.com/series/wave" class="text-muted" target="_blank">Videos</a></li>
+                            <li><a href="https://devdojo.com/scripts/php/wave" class="text-white" target="_blank">Product Page</a></li>
+                            <li><a href="/docs" class="text-white">Documentation</a></li>
+                            <li><a href="https://devdojo.com/series/wave" class="text-white" target="_blank">Videos</a></li>
                         </ul>
 
                     </div>
@@ -196,15 +207,16 @@
                         </div>
                     </div>
 
+                    <div class="col-12 text-center">
+                        <h5>&copy {{ date('Y') }} {{ setting('site.title', 'Laravel Wave') }}. All rights reserved.</h5>
+                    </div>
                 </div>
-
-
             </div>
         </div>
     </div>
 
     @if(!auth()->guest() && auth()->user()->hasAnnouncements())
-        @include('theme::partials.announcements')
+    @include('theme::partials.announcements')
     @endif
 
     <!-- Scripts -->
@@ -213,40 +225,49 @@
     @yield('javascript')
 
     @impersonating
-        @include('theme::partials.impersonation-bar')
+    @include('theme::partials.impersonation-bar')
     @endImpersonating
 
     <script>
         @if(session('message'))
-            @php
-                switch ( session('message_type') ) {
-                    case 'info':
-                        @endphp toastr.info('{{ session("message") }}'); @php
-                        break;
-                    case 'success':
-                        @endphp toastr.success('{{ session("message") }}'); @php
-                        break;
-                    case 'warning':
-                        @endphp toastr.warning('{{ session("message") }}'); @php
-                        break;
-                    case 'danger':
-                        @endphp toastr.danger('{{ session("message") }}'); @php
-                        break;
-                }
-            @endphp
+        @php
+        switch (session('message_type')) {
+            case 'info':
+                @endphp toastr.info('{{ session("message") }}');
+                @php
+                break;
+            case 'success':
+                @endphp toastr.success('{{ session("message") }}');
+                @php
+                break;
+            case 'warning':
+                @endphp toastr.warning('{{ session("message") }}');
+                @php
+                break;
+            case 'danger':
+                @endphp toastr.danger('{{ session("message") }}');
+                @php
+                break;
+        }
+        @endphp
         @endif
+
     </script>
 
     @if(setting('site.google_analytics_tracking_id', ''))
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62970618-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62970618-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-          gtag('config', '{{ setting("site.google_analytics_tracking_id") }}');
-        </script>
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', '{{ setting("site.google_analytics_tracking_id") }}');
+
+    </script>
 
     @endif
 </body>

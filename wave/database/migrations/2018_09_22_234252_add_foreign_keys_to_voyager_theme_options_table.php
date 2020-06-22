@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddForeignKeysToVoyagerThemeOptionsTable extends Migration {
+class AddForeignKeysToVoyagerThemeOptionsTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,9 +13,8 @@ class AddForeignKeysToVoyagerThemeOptionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('voyager_theme_options', function(Blueprint $table)
-		{
-			$table->foreign('voyager_theme_id')->references('id')->on('voyager_themes')->onUpdate('RESTRICT')->onDelete('CASCADE');
+		Schema::table('theme_options', function (Blueprint $table) {
+			$table->foreign('theme_id')->references('id')->on('themes')->onUpdate('RESTRICT')->onDelete('CASCADE');
 		});
 	}
 
@@ -26,10 +26,8 @@ class AddForeignKeysToVoyagerThemeOptionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('voyager_theme_options', function(Blueprint $table)
-		{
-			$table->dropForeign('voyager_theme_options_voyager_theme_id_foreign');
+		Schema::table('theme_options', function (Blueprint $table) {
+			$table->dropForeign('theme_options_theme_id_foreign');
 		});
 	}
-
 }
